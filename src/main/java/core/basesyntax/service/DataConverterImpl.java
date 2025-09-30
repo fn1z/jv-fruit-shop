@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataConverterImpl implements DataConverter {
-    private static final String DELIMITER = ",";
+    private static final String COMMA = ",";
 
     @Override
     public List<FruitTransaction> convertToTransaction(List<String> rawLines) {
@@ -25,7 +25,7 @@ public class DataConverterImpl implements DataConverter {
             if (line.isEmpty()) {
                 continue;
             }
-            String[] parts = line.split(DELIMITER);
+            String[] parts = line.split(COMMA);
             if (parts.length != 3) {
                 throw new FruitShopException("Invalid record format: " + line);
             }
