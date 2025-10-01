@@ -1,5 +1,6 @@
 package core.basesyntax.service.operation;
 
+import core.basesyntax.exception.FruitShopException;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.OperationHandler;
 import core.basesyntax.storage.Storage;
@@ -13,6 +14,17 @@ public class BalanceOperation implements OperationHandler {
 
     @Override
     public void handle(FruitTransaction transaction) {
-        storage.put(transaction.getFruit(),transaction.getQuantity());
+        if (transaction == null) {
+            throw new FruitShopException("Transaction is null");
+        }
+        String fruit = transaction.getFruit();
+        int qty = transaction.getQuantity();
+        if (fruit == null || fruit.isBlank()) {
+            throw new FruitShopException("Fruit is null or blank in transaction: " + transaction);
+        }
+        if (qty < 0) {
+            throw new FruitShopException("Quantity is negative in transaction: " + transaction);
+        }
+        storage.put(fruit, qty);
     }
 }
