@@ -16,6 +16,7 @@ public class DataConverterImpl implements DataConverter {
         if (rawLines == null) {
             throw new FruitShopException("Input lines are null");
         }
+
         List<FruitTransaction> result = new ArrayList<>();
         if (rawLines.isEmpty()) {
             return result;
@@ -31,30 +32,35 @@ public class DataConverterImpl implements DataConverter {
             if (line.isEmpty()) {
                 continue;
             }
+
             String[] parts = line.split(COMMA);
             if (parts.length != EXPECTED_COLUMNS) {
-                throw new FruitShopException("Invalid record format (expected "
-                        + EXPECTED_COLUMNS + " values): " + line);
+                throw new FruitShopException(
+                        "Invalid record format (expected "
+                                + EXPECTED_COLUMNS + " values): " + line
+                );
             }
+
             String opCode = parts[0].trim();
             String fruit = parts[1].trim();
             String qtyStr = parts[2].trim();
+
             try {
                 Operation op = Operation.fromCode(opCode);
-                if (fruit == null || fruit.isBlank()) {
-                    throw new FruitShopException("Fruit name is empty in line: " + line);
-                }
                 int qty = Integer.parseInt(qtyStr);
-                if (qty < 0) {
-                    throw new FruitShopException("Negative quantity in line: " + line);
-                }
+
                 result.add(new FruitTransaction(op, fruit, qty));
             } catch (NumberFormatException nfe) {
-                throw new FruitShopException("Invalid quantity number in line: " + line, nfe);
+                throw new FruitShopException(
+                        "Invalid quantity number in line: " + line, nfe
+                );
             } catch (RuntimeException e) {
-                throw new FruitShopException("Can't parse line: " + line, e);
+                throw new FruitShopException(
+                        "Can't parse line: " + line, e
+                );
             }
         }
+
         return result;
     }
 }
