@@ -8,6 +8,8 @@ import java.util.List;
 
 public class DataConverterImpl implements DataConverter {
     private static final String COMMA = ",";
+    private static final String TYPE = "type";
+    private static final int EXPECTED_COLUMNS = 3;
 
     @Override
     public List<FruitTransaction> convertToTransaction(List<String> rawLines) {
@@ -20,7 +22,7 @@ public class DataConverterImpl implements DataConverter {
         }
 
         int start = 0;
-        if (rawLines.get(0).toLowerCase().startsWith("type")) {
+        if (rawLines.get(0).toLowerCase().startsWith(TYPE)) {
             start = 1;
         }
 
@@ -30,8 +32,9 @@ public class DataConverterImpl implements DataConverter {
                 continue;
             }
             String[] parts = line.split(COMMA);
-            if (parts.length != 3) {
-                throw new FruitShopException("Invalid record format (expected 3 values): " + line);
+            if (parts.length != EXPECTED_COLUMNS) {
+                throw new FruitShopException("Invalid record format (expected "
+                        + EXPECTED_COLUMNS + " values): " + line);
             }
             String opCode = parts[0].trim();
             String fruit = parts[1].trim();

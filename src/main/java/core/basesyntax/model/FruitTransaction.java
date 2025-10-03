@@ -1,6 +1,5 @@
 package core.basesyntax.model;
 
-import core.basesyntax.exception.FruitShopException;
 import java.util.Objects;
 
 public class FruitTransaction {
@@ -10,13 +9,7 @@ public class FruitTransaction {
 
     public FruitTransaction(Operation operation, String fruit, int quantity) {
         this.operation = Objects.requireNonNull(operation, "operation is null");
-        if (fruit == null || fruit.isBlank()) {
-            throw new FruitShopException("fruit is null or blank");
-        }
-        if (quantity < 0) {
-            throw new FruitShopException("quantity is negative: " + quantity);
-        }
-        this.fruit = fruit;
+        this.fruit = Objects.requireNonNull(fruit, "fruit is null");
         this.quantity = quantity;
     }
 

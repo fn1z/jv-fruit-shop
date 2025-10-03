@@ -20,9 +20,6 @@ public class SupplyOperation implements OperationHandler {
         }
         String fruit = transaction.getFruit();
         int qty = transaction.getQuantity();
-        if (fruit == null || fruit.isBlank()) {
-            throw new FruitShopException("Fruit is null or blank in transaction: " + transaction);
-        }
         if (qty < 0) {
             throw new FruitShopException("Quantity is negative in transaction: " + transaction);
         }

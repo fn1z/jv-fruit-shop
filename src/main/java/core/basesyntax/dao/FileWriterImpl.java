@@ -9,9 +9,6 @@ import java.nio.file.Path;
 public class FileWriterImpl implements FileWriter {
     @Override
     public void write(String data, String fileName) {
-        if (fileName == null || fileName.isBlank()) {
-            throw new FruitShopException("Output file name is null or blank");
-        }
         if (data == null) {
             throw new FruitShopException("Data to write is null");
         }
